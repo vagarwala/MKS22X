@@ -1,22 +1,25 @@
-import java.math.*;
 public class Recursion{
-	public String name(){
-		return "Agarwala,Vandana";
-	}
-	public static double GetSquareRoot(double n, double low, double high) {
-	    double errorMargin = 0.0000001;
-	    double sqrt = (low + high) / 2;
-	    double diff = sqrt*sqrt - n;
-	    if ( diff > errorMargin)
-	        return GetSquareRoot(n, low, sqrt);
-	    if ( -diff > errorMargin)
-	        return GetSquareRoot(n, sqrt, high);
-	    return sqrt;
-	}
-	public double sqrt(double n){
-		if (n < 0){
-			throw new IllegalArgumentException();
+    public String name() {
+		return "Agarwala, Vandana";
+    }
+
+    public double sqrt(double n) {
+		if (n < 0) {
+		    throw new IllegalArgumentException();
 		}
-		return GetSquareRoot(n, 0, n);
-	}
+		return betterGuess(n,1);
+    }
+
+
+    public double betterGuess(double n, double guess) {
+		if (n == 0) {
+		    return 0;
+		}
+		if (Math.abs((n-guess*guess))/n < 0.00001) {
+		    return guess;
+		}
+		guess = (n/guess+guess)/2;
+		return betterGuess(n,guess);
+    }
+
 }
