@@ -50,7 +50,7 @@ public class KnightBoard{
                     solveHelper(row + 1,col+2,movei+1) ||
                     solveHelper(row + 1,col-2,movei+1) ||
                     solveHelper(row - 1,col+2,movei+1) ||
-                    solveHelper(row - 1,col+2,movei+1)){
+                    solveHelper(row - 1,col-2,movei+1)){
                     return true;
                 } else{
                     board[row][col] = -1; 
