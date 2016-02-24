@@ -10,7 +10,7 @@ public class Bronze {
 		    int rows = s.nextInt();
 		    int cols = s.nextInt();
 		    lake = new int[rows][cols];
-		    int waterElevation = s.nextInt();
+		    int elev = s.nextInt();
 		    int numberStomps = s.nextInt();
 		    s.nextLine();
 		    for (int i = 0; i < rows; i++) {
@@ -35,8 +35,8 @@ public class Bronze {
 
 		    for (int i = 0; i < rows; i++) {
 				for (int j = 0; j < cols; j++) {
-				    if (lake[i][j] < waterElevation) {
-						lake[i][j] = waterElevation - lake[i][j];
+				    if (lake[i][j] < elev) {
+						lake[i][j] = elev - lake[i][j];
 				    }
 				    else {
 						lake[i][j] = 0;
