@@ -6,7 +6,7 @@ public class Bronze {
     public static int solve() {
 		int[][]lake;
 		try {
-		    Scanner s = new Scanner(new File("makelake.in.txt"));
+		    Scanner s = new Scanner(new File("makelake.in"));
 		    int rows = s.nextInt();
 		    int cols = s.nextInt();
 		    lake = new int[rows][cols];
@@ -66,7 +66,7 @@ public class Bronze {
     }
 
     public static void main(String[]args) {
-		System.out.println(solve());
+		System.out.println(solve() + ",6,Agarwala,Vandana");
     }
     
 }
