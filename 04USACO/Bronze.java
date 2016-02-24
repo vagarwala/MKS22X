@@ -1,45 +1,72 @@
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.util.*;
+import java.io.*;
 
-public class Bronze{
-	int[][] lake;
+public class Bronze {
 
-	public Bronze(r, c){
-		lake = new int[r][c];
-	}
+    public static int solve() {
+		int[][]lake;
+		try {
+		    Scanner s = new Scanner(new File("makelake.in.txt"));
+		    int rows = s.nextInt();
+		    int cols = s.nextInt();
+		    lake = new int[rows][cols];
+		    int waterElevation = s.nextInt();
+		    int numberStomps = s.nextInt();
+		    s.nextLine();
+		    for (int i = 0; i < rows; i++) {
+		        for (int j = 0; j < cols; j++) {
+				    lake[i][j] = s.nextInt();
+				}
+		    }
 
-	public String stomp(row, col, deep){
-		int i, j, d, highest;
-		for (d = 0; d < deep; d++){
-			highest = lake[row][col];
-			for (i = 0; i < 3; i++)
-	            for (j = 0; j < 3; j++)
-	                if (lake[row+i][col+j] > highest) highest=lake[row+i][col+j];
-	        /* -1 for each of highest */
-	        for (i = 0; i < 3; i++)
-	            for (j = 0; j < 3; j++)
-	                if (lake[row+i][col+j] == highest) --lake[row+i][col+j];
+		    for (int i = 0; i < numberStomps; i++) {
+		        int r = s.nextInt()-1;
+				int c = s.nextInt()-1;
+				int d = s.nextInt();
+			    lake[r][c] -= d;
+				for (int j = r; j <  r+3; j++) {
+				    for (int k = c; k < c+3; k++) {
+						if (lake[j][k] > lake[r][c]) {
+						    lake[j][k] = lake[r][c];
+						}
+				    }
+				}
+		    }
+
+		    for (int i = 0; i < rows; i++) {
+				for (int j = 0; j < cols; j++) {
+				    if (lake[i][j] < waterElevation) {
+						lake[i][j] = waterElevation - lake[i][j];
+				    }
+				    else {
+						lake[i][j] = 0;
+				    }
+				}
+		    }
+
+		    int sum = arraySum(lake);
+		    return sum*72*72;
 		}
-	}
+		catch (FileNotFoundException e) {
+		    System.out.println(e);
+		}
+		
+		return 0;
+    }
 
-	public int calculateVolume(){
+
+    public static int arraySum(int[][]a) {
 		int sum = 0;
-		for(int i = 0;i<array.length;i++){
-		    for(int j =0;j<array[i].length;j++){
-			if(array[i][j] < depth){
-			    sum += (depth - array[i][j]);
-			}
+		for (int i = 0; i < a.length; i++) {
+		    for (int j = 0; j < a[i].length; j++) {
+			sum += a[i][j];
 		    }
 		}
-		return sum * 72 * 72;
+		return sum;
+    }
+
+    public static void main(String[]args) {
+		System.out.println(solve());
     }
     
-	public static void main(String[] args){
-		BufferedReader s = new BufferedReader(new FileReader(new File(args[0])));
-		String line;
-		int e, n, i, j, rs, cs, ds;
-
-	}
 }
