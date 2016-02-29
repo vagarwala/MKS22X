@@ -28,19 +28,13 @@ public class Silver{
             r2 = in.nextInt();
             c2 = in.nextInt();
             --r1; --c1; --r2; --c2;
+            dp[r1][c1][0] = 1;
         }catch(FileNotFoundException E){
                 System.out.println("The file does not exist");
         }
 
     }
     public int solve(){
-        for(int i = 0; i < h; i++){
-            for(int j = 0; j < w; j++){
-                dp[i][j][0] = 0;
-            }
-        }
-        dp[r1][c1][0] = 1;
-
         for(int i = 1; i <= t; i++){
             for(int y = 0; y < h; y++){
                 for(int x = 0; x < w; x++){
@@ -63,9 +57,14 @@ public class Silver{
     }
 
     public static void main(String[] args){
-        String file = args[0];
+        String file;
+        if (args.length == 0){
+            file = "ctravel.in";
+        }else{
+            file = args[0];
+        }
         Silver pasture = new Silver(file);
-        System.out.println(pasture.solve() + " 6,Agarwala,Vandana");
+        System.out.println(pasture.solve() + ",6,Agarwala,Vandana");
     }
 
 }
