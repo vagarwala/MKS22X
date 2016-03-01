@@ -3,12 +3,9 @@ import java.io.*;
 
 public class Silver{
 
-    private final int MAXN = 101;
-    private final int MAXT = 16;
-
     private int h, w, t, r1, c1, r2, c2;
-    private char[][] field = new char[MAXN][MAXN];
-    private int[][][] dp = new int[MAXN][MAXN][MAXT];
+    private char[][] field = new char[101][101];
+    private int[][][] dp = new int[101][101][16];
 
     public Silver(String filename){
         try{
