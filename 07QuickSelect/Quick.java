@@ -1,4 +1,7 @@
 public class Quick{
+  public static String name(){
+      return "6,Agarwala,Vandana";
+  }
   public static int quickselect(int[] array, int n) {
     return selective(array, 0, array.length - 1, n);
   }
