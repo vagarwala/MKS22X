@@ -45,6 +45,19 @@ public class Quick{
   private static int randomPivot(int left, int right) {
     return left + (int) Math.floor(Math.random() * (right - left + 1));
   }
+
+  public static void quickSort(int[] array){
+    quicksort(array, 0, array.length -1);
+  }
+
+  public static void quicksort(int[] array, int left, int right){
+    if (left< right){
+      int pivotIndex = randomPivot(left, right);
+      int index = partition(array, left, right, pivotIndex);
+      quicksort(array, left, index -1);
+      quicksort(array, index + 1, right);
+    }
+  }
 /*
   public static void main(String[] args) {
     int[] array = new int[args.length];
@@ -54,6 +67,10 @@ public class Quick{
       
     for(int i = 0; i < array.length; i++) {
       System.out.println(quickselect(array, i));
+    }
+    int[] array1 = quickSort(array);
+    for(int i = 0; i < array.length; i++) {
+      System.out.println(array[i]);
     }
   }
   */
