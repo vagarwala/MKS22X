@@ -120,8 +120,38 @@ public class LinkedList{
       }
       return -1;
   }
+
+  public boolean contains(Object value) {
+      int index = 0;
+      LNode current = start.getNext();
+      while (current != null) {
+          if (current.getData().equals(value)) {
+              return true;
+          }
+          index++;
+          current = current.getNext();
+      }
+      return false;
+  }
+
+  public void clear(){
+    int index = 0;
+    LNode current = start.getNext();
+    while (current != null) {
+          current.setData(null);
+          index++;
+          current = current.getNext();
+      }
+    size = 0;
+  }
+  public boolean isEmpty(){
+    return start.getNext() == null || size == 0;
+  }
    
    public String toString(){
+      if (isEmpty()){
+        return "[ ]";
+      }
       LNode current = start.getNext();
       String output = "[ ";
       while(current != null){
@@ -130,7 +160,7 @@ public class LinkedList{
       }
       return output + "]";
    }
-   /*
+   
 
    public static void main(String[] args) {
         LinkedList myList = new LinkedList();
@@ -146,8 +176,10 @@ public class LinkedList{
         
         myList.remove(2);
         System.out.println(myList.toString() + myList.size());
-        System.out.println(myList.indexOf(6));
+        System.out.println(myList.indexOf(17));
+        myList.clear();
+        System.out.println(myList.toString() + myList.size());
         
     }
-    */
+    
 }
