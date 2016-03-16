@@ -97,7 +97,7 @@ public class LinkedList{
    
    public Object remove(int index){
       if(index < 0 || index > size())
-         throw new IndexOutOfBoundsException();
+         return null;
       LNode current = start;
       for(int i = 0; i < index && current.getNext() != null; i++){
          current = current.getNext();
@@ -161,7 +161,7 @@ public class LinkedList{
       return output + "]";
    }
    
-
+   /*
    public static void main(String[] args) {
         LinkedList myList = new LinkedList();
         myList.add(7);
@@ -181,5 +181,6 @@ public class LinkedList{
         System.out.println(myList.toString() + myList.size());
         
     }
+    */
     
 }
