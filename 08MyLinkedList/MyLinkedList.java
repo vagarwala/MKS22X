@@ -1,37 +1,39 @@
 public class MyLinkedList{
 
-    private class LNode{
-		int value;
-		LNode next;
+    private class LNode<T>{
+		T value;
+		LNode<T> next;
 
-		public LNode(int val){
+		public LNode(T val){
 		    value = val;
 		    next = null;
 		}
 
-		public LNode(int _val, LNode _next){
+		public LNode(T _val, LNode<T> _next){
 	        next = _next;
 	        value = _val;
 	    }
 
-	    public int getData(){
+	    public T getData(){
 		    return value;
 		}
 
-		public void setData(int val){
+		public T setData(T val){
 		    value = val;
+		    return val;
 		}
 
-		public LNode getNext(){
+		public LNode<T> getNext(){
 		    return next;
 		} 
 
-		public void setNext(LNode Next){
+		public LNode<T> setNext(LNode<T> Next){
 		    next = Next;
+		    return next;
 		}
     }
-    private LNode start;
-    private LNode last;
+    private LNode<T> start;
+    private LNode<T> last;
     private int size;
 
     // no constructor necessary bc things will automatically be init to null and 0
@@ -41,32 +43,32 @@ public class MyLinkedList{
 		return size;
     }
 
-    public Object get(int index){
+    public T get(int index){
     	if(index < 0 || index > size)
     		return null;
-		LNode current = start;
+		LNode<T> current = start;
 		for(int i = 0; i < index; i++){
 		    current = current.getNext();
 		}
 		return current.getData();
     }
 
-    public int set(int index, int val){
-		LNode current = start;
+    public T set(int index, int val){
+		LNode<T> current = start;
 		for(int i = 0; i < index; i++){
 		    current = current.getNext();
 		}
-		int output = current.getData();
+		T output = current.getData();
 		current.setData(val);
 		return output;
     }
 
     public boolean add(int value){
 		if(start==null){
-		    start = new LNode(value);
+		    start = new LNode<T>(value);
 		    last = start;
 		}else{
-		    LNode Next = new LNode(value);
+		    LNode<T> Next = new LNode<T>(value);
 		    last.setNext(Next);
 		    last = Next;
 		    
@@ -78,25 +80,25 @@ public class MyLinkedList{
     public boolean add(int index,int value){
     	if(index < 0 || index > size)
     		return false;
-		LNode current = start;
+		LNode<T> current = start;
 		for(int i = 1; i < index; i++){
 			current = current.getNext();
 		}
-		LNode temp = new LNode(value);
+		LNode<T> temp = new LNode<T>(value);
 		temp.setNext(current.getNext());
 		current.setNext(temp);
 		size++;
 		return true;
     }
 
-    public Object remove(int index){
+    public T remove(int index){
     	if(index < 0 || index > size)
     		return null;
-		LNode current = start;
+		LNode<T> current = start;
 		for(int i = 1; i < index; i++){
 			current = current.getNext();
 		}
-		LNode temp = current.getNext();
+		LNode<T> temp = current.getNext();
 		current.setNext(temp.getNext());
 		size--;
 		return temp.getData();
@@ -104,7 +106,7 @@ public class MyLinkedList{
 
     public int indexOf(int value) {
         int index = 0;
-        LNode current = start;
+        LNode<T> current = start;
         while (current != null) {
             if (current.getData() == value) {
                 return index;
@@ -117,7 +119,7 @@ public class MyLinkedList{
 
 	public boolean contains(int value){
         int index = 0;
-        LNode current = start;
+        LNode<T> current = start;
         while (current != null) {
             if (current.getData() == value) {
                 return true;
@@ -141,7 +143,7 @@ public class MyLinkedList{
         	return "[ ]";
         }
 		String output = "[";
-		LNode current = start;
+		LNode<T> current = start;
 		while(current != null){
 	    	output += current.getData();
 	    	if(current.getNext() != null){
