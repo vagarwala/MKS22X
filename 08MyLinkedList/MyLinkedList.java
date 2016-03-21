@@ -1,4 +1,4 @@
-public class MyLinkedList{
+public class MyLinkedList<T>{
 
     private class LNode<T>{
 		T value;
@@ -53,7 +53,7 @@ public class MyLinkedList{
 		return current.getData();
     }
 
-    public T set(int index, int val){
+    public T set(int index, T val){
 		LNode<T> current = start;
 		for(int i = 0; i < index; i++){
 		    current = current.getNext();
@@ -63,7 +63,7 @@ public class MyLinkedList{
 		return output;
     }
 
-    public boolean add(int value){
+    public boolean add(T value){
 		if(start==null){
 		    start = new LNode<T>(value);
 		    last = start;
@@ -77,7 +77,7 @@ public class MyLinkedList{
 		return true;
     }
 
-    public boolean add(int index,int value){
+    public boolean add(int index,T value){
     	if(index < 0 || index > size)
     		return false;
 		LNode<T> current = start;
@@ -104,7 +104,7 @@ public class MyLinkedList{
 		return temp.getData();
     }
 
-    public int indexOf(int value) {
+    public int indexOf(T value) {
         int index = 0;
         LNode<T> current = start;
         while (current != null) {
@@ -117,7 +117,7 @@ public class MyLinkedList{
         return -1;
     }
 
-	public boolean contains(int value){
+	public boolean contains(T value){
         int index = 0;
         LNode<T> current = start;
         while (current != null) {
@@ -145,7 +145,7 @@ public class MyLinkedList{
 		String output = "[";
 		LNode<T> current = start;
 		while(current != null){
-	    	output += current.getData();
+	    	output += current.getData().toString();
 	    	if(current.getNext() != null){
 				output += ", ";
 	    	}
