@@ -153,7 +153,7 @@ public class MyLinkedList<T>{
 		}
 		return output + "]";
     }
-
+/*
     public static void main(String[] args){
     	MyLinkedList m = new MyLinkedList();
 		m.add(3);
@@ -189,6 +189,6 @@ public class MyLinkedList<T>{
         myList.clear();
         System.out.println(myList.toString() + myList.size());
 		
-    }
+    } */
    
 }
