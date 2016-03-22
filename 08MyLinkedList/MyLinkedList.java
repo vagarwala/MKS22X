@@ -58,9 +58,9 @@ public class MyLinkedList<T>{
 		for(int i = 0; i < index; i++){
 		    current = current.getNext();
 		}
-		T output = current.getData();
-		current.setData(val);
-		return output;
+		if (index == size - 1)
+			last = current;
+		return current.setData(val);
     }
 
     public boolean add(T value){
@@ -80,11 +80,18 @@ public class MyLinkedList<T>{
     public boolean add(int index,T value){
     	if(index < 0 || index > size)
     		return false;
+    	LNode<T> temp = new LNode<T>(value);
+		if (index == size)
+			return add(thing);
+		if (index == 0){
+			temp.setNext(start);
+			start = temp;
+			return true;
+		}
 		LNode<T> current = start;
 		for(int i = 1; i < index; i++){
 			current = current.getNext();
 		}
-		LNode<T> temp = new LNode<T>(value);
 		temp.setNext(current.getNext());
 		current.setNext(temp);
 		size++;
@@ -94,6 +101,12 @@ public class MyLinkedList<T>{
     public T remove(int index){
     	if(index < 0 || index > size)
     		return null;
+    	if (index == 0){
+    		T removed = start.getData();
+    		start = start.getNext();
+    		size --;
+    		return ret;
+    	}
 		LNode<T> current = start;
 		for(int i = 1; i < index; i++){
 			current = current.getNext();
