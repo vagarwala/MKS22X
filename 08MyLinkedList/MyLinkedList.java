@@ -31,6 +31,12 @@ public class MyLinkedList<T>{
 		    next = Next;
 		    return next;
 		}
+
+		public boolean hasNext(){
+		    if(getNext()==null)
+				return false;
+		    return true;
+		}
     }
     private LNode<T> start;
     private LNode<T> last;
@@ -44,8 +50,10 @@ public class MyLinkedList<T>{
     }
 
     public T get(int index){
-    	if(index < 0 || index > size)
-    		return null;
+    	if(index < 0 || index > size())
+           throw new IndexOutOfBoundsException();
+        if (isEmpty())
+        	throw new NoSuchElementException();
 		LNode<T> current = start;
 		for(int i = 0; i < index; i++){
 		    current = current.getNext();
@@ -54,6 +62,8 @@ public class MyLinkedList<T>{
     }
 
     public T set(int index, T val){
+    	if(index < 0 || index >= size())
+           throw new IndexOutOfBoundsException();
 		LNode<T> current = start;
 		for(int i = 0; i < index; i++){
 		    current = current.getNext();
@@ -64,12 +74,14 @@ public class MyLinkedList<T>{
     }
 
     public boolean add(T value){
+    	if (val == null){
+        	throw new NullPointerException();
+        }
 		if(start==null){
 		    start = new LNode<T>(value);
 		    last = start;
 		}else{
-		    LNode<T> Next = new LNode<T>(value);
-		    last.setNext(Next);
+		    last.setNext(new LNode<T>(value));
 		    last = Next;
 		    
 		}
@@ -78,14 +90,18 @@ public class MyLinkedList<T>{
     }
 
     public boolean add(int index,T value){
+    	if (val == null){
+        	throw new NullPointerException();
+        }
     	if(index < 0 || index > size)
-    		return false;
+    		throw new IndexOutOfBoundsException();
     	LNode<T> temp = new LNode<T>(value);
 		if (index == size)
-			return add(thing);
+			return add(value);
 		if (index == 0){
 			temp.setNext(start);
 			start = temp;
+			size ++;
 			return true;
 		}
 		LNode<T> current = start;
@@ -99,13 +115,15 @@ public class MyLinkedList<T>{
     }
 
     public T remove(int index){
-    	if(index < 0 || index > size)
-    		return null;
+        if (isEmpty())
+        	throw new NoSuchElementException();
+    	if(index < 0 || index > size())
+           throw new IndexOutOfBoundsException();
     	if (index == 0){
     		T removed = start.getData();
     		start = start.getNext();
     		size --;
-    		return ret;
+    		return removed;
     	}
 		LNode<T> current = start;
 		for(int i = 1; i < index; i++){
@@ -113,6 +131,9 @@ public class MyLinkedList<T>{
 		}
 		LNode<T> temp = current.getNext();
 		current.setNext(temp.getNext());
+		if(current.getNext()==null){
+		    last=current;
+		}
 		size--;
 		return temp.getData();
     }
@@ -143,8 +164,10 @@ public class MyLinkedList<T>{
         return false;
     }
 
-    public void clear(){
+    public boolean clear(){
+    	start = null;
     	size = 0;
+    	return true;
     }
   
     public boolean isEmpty(){
