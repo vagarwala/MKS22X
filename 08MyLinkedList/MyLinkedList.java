@@ -1,15 +1,43 @@
-public class MyLinkedList<T>{
-
-    private class LNode<T>{
+public class MyLinkedList<T> implements Iterable<T>{
+	public Iterator<T> iterator() {
+		return new MyLinkedListIterator(this);
+	}
+	
+	public class MyLinkedListIterator implements Iterator<T> {
+		int pos;
+		LNode current;
+		
+		public MyLinkedListIterator(MyLinkedList<T> L) {
+			pos = 0;
+			current = L.start;
+		}
+		
+		public boolean hasNext() {
+			if (current.getNext() != null) {
+				return true;
+			}
+			return false;
+		}
+		public T next() {
+			pos = 1;
+			T ret = current.getData();
+			current = current.getNext();
+			return ret;
+		}
+		public void remove() {
+			throw new UnsupportedOperationException();
+		}
+	}
+    private class LNode{
 		T value;
-		LNode<T> next;
+		LNode next;
 
 		public LNode(T val){
 		    value = val;
 		    next = null;
 		}
 
-		public LNode(T _val, LNode<T> _next){
+		public LNode(T _val, LNode _next){
 	        next = _next;
 	        value = _val;
 	    }
@@ -23,11 +51,11 @@ public class MyLinkedList<T>{
 		    return val;
 		}
 
-		public LNode<T> getNext(){
+		public LNode getNext(){
 		    return next;
 		} 
 
-		public LNode<T> setNext(LNode<T> Next){
+		public LNode setNext(LNode Next){
 		    next = Next;
 		    return next;
 		}
@@ -38,8 +66,8 @@ public class MyLinkedList<T>{
 		    return true;
 		}
     }
-    private LNode<T> start;
-    private LNode<T> last;
+    private LNode start;
+    private LNode last;
     private int size;
 
     // no constructor necessary bc things will automatically be init to null and 0
@@ -54,7 +82,7 @@ public class MyLinkedList<T>{
            throw new IndexOutOfBoundsException();
         if (isEmpty())
         	throw new NoSuchElementException();
-		LNode<T> current = start;
+		LNode current = start;
 		for(int i = 0; i < index; i++){
 		    current = current.getNext();
 		}
@@ -64,7 +92,7 @@ public class MyLinkedList<T>{
     public T set(int index, T val){
     	if(index < 0 || index >= size())
            throw new IndexOutOfBoundsException();
-		LNode<T> current = start;
+		LNode current = start;
 		for(int i = 0; i < index; i++){
 		    current = current.getNext();
 		}
@@ -78,10 +106,10 @@ public class MyLinkedList<T>{
         	throw new NullPointerException();
         }
 		if(start==null){
-		    start = new LNode<T>(value);
+		    start = new LNode(value);
 		    last = start;
 		}else{
-		    last.setNext(new LNode<T>(value));
+		    last.setNext(new LNode(value));
 		    last = Next;
 		    
 		}
@@ -95,7 +123,7 @@ public class MyLinkedList<T>{
         }
     	if(index < 0 || index > size)
     		throw new IndexOutOfBoundsException();
-    	LNode<T> temp = new LNode<T>(value);
+    	LNode temp = new LNode(value);
 		if (index == size)
 			return add(value);
 		if (index == 0){
@@ -104,7 +132,7 @@ public class MyLinkedList<T>{
 			size ++;
 			return true;
 		}
-		LNode<T> current = start;
+		LNode current = start;
 		for(int i = 1; i < index; i++){
 			current = current.getNext();
 		}
@@ -125,11 +153,11 @@ public class MyLinkedList<T>{
     		size --;
     		return removed;
     	}
-		LNode<T> current = start;
+		LNode current = start;
 		for(int i = 1; i < index; i++){
 			current = current.getNext();
 		}
-		LNode<T> temp = current.getNext();
+		LNode temp = current.getNext();
 		current.setNext(temp.getNext());
 		if(current.getNext()==null){
 		    last=current;
@@ -140,7 +168,7 @@ public class MyLinkedList<T>{
 
     public int indexOf(T value) {
         int index = 0;
-        LNode<T> current = start;
+        LNode current = start;
         while (current != null) {
             if (current.getData() == value) {
                 return index;
@@ -153,7 +181,7 @@ public class MyLinkedList<T>{
 
 	public boolean contains(T value){
         int index = 0;
-        LNode<T> current = start;
+        LNode current = start;
         while (current != null) {
             if (current.getData() == value) {
                 return true;
@@ -179,7 +207,7 @@ public class MyLinkedList<T>{
         	return "[ ]";
         }
 		String output = "[";
-		LNode<T> current = start;
+		LNode current = start;
 		while(current != null){
 	    	output += current.getData().toString();
 	    	if(current.getNext() != null){
