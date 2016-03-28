@@ -142,6 +142,24 @@ public class MyLinkedList<T> implements Iterable<T>{
 		size++;
 		return true;
     }
+/*
+    public boolean push(T val){
+    	if (val == null){
+        	throw new NullPointerException();
+        }
+		if(start==null){
+		    start = new LNode(value);
+		    last = start;
+		    return true;
+		    size++;
+		} else{
+	    	LNode temp = new LNode(val);
+	    	temp.getNext() = start;
+	    	start = temp;
+	    	size++;
+	    }
+    }
+    */
 
     public T remove(int index){
         if (isEmpty())
@@ -166,6 +184,14 @@ public class MyLinkedList<T> implements Iterable<T>{
 		size--;
 		return temp.getData();
     }
+/*
+    public T pop(){
+    	T elem = start.getData();
+    	start = start.getNext();
+    	size--;
+    	return elem;
+    }
+    */
 
     public int indexOf(T value) {
         int index = 0;
