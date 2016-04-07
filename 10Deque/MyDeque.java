@@ -2,7 +2,7 @@ import java.util.*;
 
 public class MyDeque<T>{
    public static final int INIT_CAPACITY = 8;   // initial array capacity
-   protected int capacity;  // current capacity of the array
+   protected int size;  // size
    protected int front;     // index of the front element
    protected int rear;      // index of the rear element
    protected T[] A;       // array deque
@@ -10,7 +10,7 @@ public class MyDeque<T>{
    @SuppressWarnings("unchecked")
    public MyDeque(){
       A = (T[]) new Object[ INIT_CAPACITY ];
-      capacity = INIT_CAPACITY;
+      size = 0;
       front = rear = 0;
    }
 
@@ -20,8 +20,10 @@ public class MyDeque<T>{
      *
      */
     public void printDeque(){
-        for ( int i = front; i != rear; i = (i+1) % capacity )
+        int i;
+        for (i = front; i != rear; i = (i+1) % (A.length - 1))
             System.out.print( A[i].toString() + " " );
+        System.out.print(A[i].toString());
         System.out.println();
     }
 
@@ -31,129 +33,103 @@ public class MyDeque<T>{
      *
      */
     public void printArray(){
-        for ( int i = 0; i < capacity; i++ )
+        for ( int i = 0; i < A.length; i++ )
            System.out.print( A[i].toString() + " " );
         System.out.println();
     }
 
     public int size(){
-        return (capacity - front + rear) % capacity;
+        return size;
     }
 
     public boolean isEmpty(){
-        return front == rear;
+        return size() == 0;
     }
 
     public T getFirst(){
         if(isEmpty()){
             throw new NoSuchElementException();
         }
-        return A[front % capacity]; 
+        return A[front]; 
     }
 
     public T getLast(){
         if(isEmpty()){
             throw new NoSuchElementException();
         }
-        return A[(front + rear - 1) % capacity]; 
+        return A[rear]; 
     }
+
     @SuppressWarnings("unchecked")
     private void grow(){
-        T[] B = (T[]) new Object[capacity*2];
-        for(int i = 0; i < size(); i++){
-            B[i] = A[i];
+        T[] newData = (T[])new Object[A.length*2];
+        int i = front;
+        int index = 0;
+        while(i!=rear){
+            newData[index]=A[i];
+            i = (i+1)%(A.length - 1);
+            index++;
         }
-        A = B;
+        newData[index]=A[rear];
+        front=0;
+        rear=index;
+        A=newData;
     }
 
-    public void insertFirst(T e){
-        rear++;
-        if(size() == capacity - 1){
+    public void addFirst(T e){
+        if(size() == A.length){
             grow();
         }
-        for(int i = size(); i >= front; i--){
-            A[i+1] = A[i];
-        }
+        front = (A.length + front - 1)%(A.length);
+        if (size() == 0)
+            front = rear = 0;
         A[front] = e;
-        front = front % capacity;
+        size++;
     }
-    @SuppressWarnings("unchecked")
-    public void insertLast(T e){
-        if(size() == capacity - 1) {
-            capacity= capacity*2;
-        }
-
-        T[] B = (T[]) new Object[capacity];
-
-        for(int i = 0; i < size(); i++) {
-            B[i] = A[i];
-        }
-
-        A = B;
-
+    
+    public void addLast(T e){
+        if(size() == A.length)
+            grow();
+        rear = (rear+1)%(A.length - 1);
+        if (size() == 0)
+            front = rear = 0;
         A[rear] = e;
-        rear = (rear + 1) % capacity;
+        size++;
 
     }
     @SuppressWarnings("unchecked")
     public T removeFirst(){
-        T result = A[front];
-        A[front] = null;
-        front = (front+1)%capacity;
-
-        if(isEmpty()){
+        if(isEmpty())
             throw new NoSuchElementException();
-        }
-        else if(capacity >= 8){
-            if(size() < capacity/2){
-                capacity /= 2;
-                T[] B = (T[]) new Object[capacity];
-                int counter=0;
-                for(int i = front; i < front+size(); i++){
-                    B[counter] = A[i%(capacity*2)];
-                    counter++;
-                }
-                A = B;
-                front = 0;
-                rear = size()-1;
-            }
-        }
+        T result = A[front];
+        front = (front+1)%(A.length - 1);
+        size --;
         return result;
     }
     @SuppressWarnings("unchecked")
     public T removeLast(){
-        if(isEmpty()){
+        if(isEmpty())
             throw new NoSuchElementException();
-        }
-        else if(capacity >= 4){
-            if(size() < capacity/2){
-                T[] B = (T[]) new Object[capacity/2];
-                for(int i = 0; i < capacity/2; i++){
-                    B[i] = A[i];
-                }
-                A = B;
-            }
-        }
-        T temp = A[rear - 1];
-        A[rear] = null;
-        rear = (rear - 1) % capacity;
+        T temp = A[rear];
+        rear = (A.length + rear - 1)%(A.length);
+        size--;
         return temp;
     }
 
     public static void main(String[]args) {
         MyDeque<Integer> m = new MyDeque<>();
-        m.insertFirst(3);
-        m.insertFirst(2);
-        m.insertLast(4);
+        m.addFirst(3);
+        m.addFirst(2);
+        m.addLast(4);
         m.printDeque();
-        m.insertLast(5);
-        m.insertLast(6);
-        m.insertLast(7);
-        m.insertLast(8);
-        m.insertLast(9);
-        m.insertLast(10);
-        m.insertFirst(1);
-        m.insertFirst(0);
+        m.addLast(5);
+        m.addLast(6);
+        m.addLast(7);
+        m.addLast(8);
+        m.addLast(9);
+        m.addLast(10);
+        m.addFirst(1);
+        m.addFirst(0);
         m.printDeque();
         m.removeFirst();
         m.printDeque();
