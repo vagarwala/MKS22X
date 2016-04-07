@@ -16,15 +16,14 @@ public class MyDeque<T>{
      * Print only the content of the deque
      *
      */
-    public String printDeque(){
+    public void printDeque(){
         int i = front;
-        String retStr="";
         while(i!=rear){
-            retStr+=A[i] + " ";
+            System.out.print(A[i].toString() + " ");
             i = (i+1)%(A.length - 1);
         }
-        retStr+=A[i];
-        return retStr;
+        System.out.print(A[i]);
+        System.out.println();
     }
 
 
@@ -62,24 +61,23 @@ public class MyDeque<T>{
 
     @SuppressWarnings("unchecked")
     private void grow(){
-        T[] newData = (T[])new Object[A.length*2];
+        T[] B = (T[])new Object[A.length*2];
         int i = front;
         int index = 0;
         while(i!=rear){
-            newData[index]=A[i];
+            B[index]=A[i];
             i = (i+1)%(A.length);
             index++;
         }
-        newData[index]=A[rear];
+        B[index]=A[rear];
         front=0;
         rear=index;
-        A=newData;
+        A=B;
     }
 
     public void addFirst(T e){
-        if(size() == A.length){
+        if(size() == A.length)
             grow();
-        }
         front = (A.length + front - 1)%(A.length);
         if (size() == 0){
             front = 0;
@@ -99,7 +97,7 @@ public class MyDeque<T>{
         size++;
 
     }
-    @SuppressWarnings("unchecked")
+    
     public T removeFirst(){
         if(isEmpty())
             throw new NoSuchElementException();
@@ -108,7 +106,7 @@ public class MyDeque<T>{
         size --;
         return result;
     }
-    @SuppressWarnings("unchecked")
+    
     public T removeLast(){
         if(isEmpty())
             throw new NoSuchElementException();
