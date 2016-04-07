@@ -1,7 +1,6 @@
 import java.util.*;
 
 public class MyDeque<T>{
-   public static final int INIT_CAPACITY = 8;   // initial array capacity
    protected int size;  // size
    protected int front;     // index of the front element
    protected int rear;      // index of the rear element
@@ -9,9 +8,7 @@ public class MyDeque<T>{
 
    @SuppressWarnings("unchecked")
    public MyDeque(){
-      A = (T[]) new Object[ INIT_CAPACITY ];
-      size = 0;
-      front = rear = 0;
+      A = (T[]) new Object[10];
    }
 
 
@@ -19,12 +16,15 @@ public class MyDeque<T>{
      * Print only the content of the deque
      *
      */
-    public void printDeque(){
-        int i;
-        for (i = front; i != rear; i = (i+1) % (A.length - 1))
-            System.out.print( A[i].toString() + " " );
-        System.out.print(A[i].toString());
-        System.out.println();
+    public String printDeque(){
+        int i = front;
+        String retStr="";
+        while(i!=rear){
+            retStr+=A[i] + " ";
+            i = (i+1)%(A.length - 1);
+        }
+        retStr+=A[i];
+        return retStr;
     }
 
 
@@ -47,14 +47,14 @@ public class MyDeque<T>{
     }
 
     public T getFirst(){
-        if(isEmpty()){
+        if(size()==0){
             throw new NoSuchElementException();
         }
         return A[front]; 
     }
 
     public T getLast(){
-        if(isEmpty()){
+        if(size()==0){
             throw new NoSuchElementException();
         }
         return A[rear]; 
@@ -67,7 +67,7 @@ public class MyDeque<T>{
         int index = 0;
         while(i!=rear){
             newData[index]=A[i];
-            i = (i+1)%(A.length - 1);
+            i = (i+1)%(A.length);
             index++;
         }
         newData[index]=A[rear];
@@ -81,8 +81,10 @@ public class MyDeque<T>{
             grow();
         }
         front = (A.length + front - 1)%(A.length);
-        if (size() == 0)
-            front = rear = 0;
+        if (size() == 0){
+            front = 0;
+            rear = 0;
+        }
         A[front] = e;
         size++;
     }
@@ -90,7 +92,7 @@ public class MyDeque<T>{
     public void addLast(T e){
         if(size() == A.length)
             grow();
-        rear = (rear+1)%(A.length - 1);
+        rear = (rear+1)%(A.length);
         if (size() == 0)
             front = rear = 0;
         A[rear] = e;
@@ -102,7 +104,7 @@ public class MyDeque<T>{
         if(isEmpty())
             throw new NoSuchElementException();
         T result = A[front];
-        front = (front+1)%(A.length - 1);
+        front = (front+1)%(A.length);
         size --;
         return result;
     }
