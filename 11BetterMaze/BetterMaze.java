@@ -4,7 +4,7 @@ public class BetterMaze{
     private class Node{
         private int xcor;
         private int ycor;
-        private Queue<Node> path;
+        private MyQueue<Node> path;
         public Node(int x, int y){
             setXcor(x);
             setYcor(y);
@@ -31,7 +31,7 @@ public class BetterMaze{
     private char[][] maze;
     private int[]    solution;
     private int      startRow,startCol;
-    private Frontier<???> placesToGo;
+    //private Frontier<???> placesToGo;
     private boolean  animate;
 
    /**return a copy of solution.
@@ -41,7 +41,8 @@ public class BetterMaze{
      * called (otherwise an empty array is returned)
      *Postcondition:  the correct solution is in the returned array
     **/
-    public int[] solutionCoordinates(){ }    
+      
+    //public int[] solutionCoordinates(){ }    
 
     
 }
