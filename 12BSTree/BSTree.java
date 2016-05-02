@@ -18,7 +18,65 @@ class TreeNode<T extends Comparable<T>>{
         right = null;
         data = n;
         height = 0;
-    }     
+    }
+    public boolean hasLeft(){
+        return left!=null;
+    }
+    public boolean hasRight(){
+        return right!=null;
+    }
+    public boolean hasData(){
+        return data!=null;
+    }
+    public boolean hasChildren(){
+        return hasRight() && hasLeft();
+    }
+    public T getData(){
+        return data;
+    }
+    public void setLeft(TreeNode<T> n){
+        left = n;
+    }
+    public void setRight(TreeNode<T> n ){
+        right = n;
+    }
+    @SuppressWarnings("unchecked")
+    public TreeNode<T> toPromote() {
+        TreeNode<T> start = left;
+        while (start.right != null)
+            start = start.right;
+        return start;
+    }
+    @SuppressWarnings("unchecked")
+    private void shift(TreeNode<T> n, TreeNode<T> o) {
+        n = o;
+    }
+    @SuppressWarnings("unchecked")
+    public T remove(T value) {
+        if (value.compareTo(data) == 0) {
+            if (left != null && right != null)
+                data = remove(toPromote().getData());
+            else if (left != null)
+                shift(this,this.left);
+            else if (right != null)
+                shift(this,this.right);
+            else
+                data = null;
+            return value;
+        }
+        else if (value.compareTo(data) < 0) {
+            T dat = left.remove(value);
+            if (left.getData() == null)
+                left = null;
+            return dat;
+        }
+        else {
+            T dat = right.remove(value);
+            if (right.getData() == null)
+                right = null;
+            return dat;
+        }
+    }
 }
 
 /* Class BSTree */
@@ -77,6 +135,14 @@ class BSTree<T extends Comparable<T>>{
         t.height = max( height( t.left ), height( t.right ) ) + 1;
         return t;
     }
+    @SuppressWarnings("unchecked")
+    public T remove(T value) {
+    if (root.getData() == null) {
+        return null;
+    }   
+    return root.remove(value);
+    }
+
     /* Rotate binary tree node with left child */
     @SuppressWarnings("unchecked")  
     private TreeNode<T> rotateWithLeftChild(TreeNode<T> k2){

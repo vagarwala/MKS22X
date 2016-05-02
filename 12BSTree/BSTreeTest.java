@@ -15,6 +15,7 @@ public class BSTreeTest{
             System.out.println("3. count nodes");
             System.out.println("4. check empty");
             System.out.println("5. clear tree");
+            System.out.println("6. remove");
 
             int choice = scan.nextInt();            
             switch (choice){
@@ -35,7 +36,11 @@ public class BSTreeTest{
             case 5 : 
                 System.out.println("\nTree Cleared");
                 sbbst.clear();
-                break;         
+                break;
+            case 6 :
+                System.out.println("Enter integer element to remove");
+                sbbst.remove(scan.nextInt());
+                break;
             default : 
                 System.out.println("Wrong Entry \n "); 
                 break;   
