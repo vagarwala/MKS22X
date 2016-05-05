@@ -1,6 +1,7 @@
 import java.util.Scanner;
 
 /* Class TreeNode<T> */
+@SuppressWarnings("unchecked")
 class TreeNode<T extends Comparable<T>>{    
     TreeNode<T> left, right;
     T data;
@@ -40,18 +41,18 @@ class TreeNode<T extends Comparable<T>>{
     public void setRight(TreeNode<T> n ){
         right = n;
     }
-    @SuppressWarnings("unchecked")
+    
     public TreeNode<T> toPromote() {
         TreeNode<T> start = left;
         while (start.right != null)
             start = start.right;
         return start;
     }
-    @SuppressWarnings("unchecked")
+    
     private void shift(TreeNode<T> n, TreeNode<T> o) {
         n = o;
     }
-    @SuppressWarnings("unchecked")
+    
     public T remove(T value) {
         if (value.compareTo(data) == 0) {
             if (left != null && right != null)
@@ -80,6 +81,7 @@ class TreeNode<T extends Comparable<T>>{
 }
 
 /* Class BSTree */
+@SuppressWarnings("unchecked")
 class BSTree<T extends Comparable<T>>{
     private TreeNode<T> root;    
 
@@ -102,17 +104,17 @@ class BSTree<T extends Comparable<T>>{
         root = insert(data, root);
     }
     /* Function to get height of node */
-    @SuppressWarnings("unchecked")
+    
     private int height(TreeNode<T> t ){
         return t == null ? -1 : t.height;
     }
     /* Function to max of left/right node */
-    @SuppressWarnings("unchecked")
+    
     private int max(int lhs, int rhs){
         return lhs > rhs ? lhs : rhs;
     }
     /* Function to insert data recursively */
-    @SuppressWarnings("unchecked")
+    
     private TreeNode<T> insert(T x, TreeNode<T> t){
         if (t == null)
             t = new TreeNode<T>(x);
@@ -135,7 +137,7 @@ class BSTree<T extends Comparable<T>>{
         t.height = max( height( t.left ), height( t.right ) ) + 1;
         return t;
     }
-    @SuppressWarnings("unchecked")
+    
     public T remove(T value) {
     if (root.getData() == null) {
         return null;
@@ -144,7 +146,7 @@ class BSTree<T extends Comparable<T>>{
     }
 
     /* Rotate binary tree node with left child */
-    @SuppressWarnings("unchecked")  
+      
     private TreeNode<T> rotateWithLeftChild(TreeNode<T> k2){
         TreeNode<T> k1 = k2.left;
         k2.left = k1.right;
@@ -155,7 +157,7 @@ class BSTree<T extends Comparable<T>>{
     }
 
     /* Rotate binary tree node with right child */
-    @SuppressWarnings("unchecked")
+    
     private TreeNode<T> rotateWithRightChild(TreeNode<T> k1){
         TreeNode<T> k2 = k1.right;
         k1.right = k2.left;
@@ -167,7 +169,7 @@ class BSTree<T extends Comparable<T>>{
     /**
     * Double rotate binary tree node: first left child
     * with its right child; then node k3 with new left child */
-    @SuppressWarnings("unchecked")
+    
     private TreeNode<T> doubleWithLeftChild(TreeNode<T> k3){
         k3.left = rotateWithRightChild( k3.left );
         return rotateWithLeftChild( k3 );
@@ -175,7 +177,7 @@ class BSTree<T extends Comparable<T>>{
     /**
     * Double rotate binary tree node: first right child
     * with its left child; then node k1 with new right child */
-    @SuppressWarnings("unchecked")   
+       
     private TreeNode<T> doubleWithRightChild(TreeNode<T> k1){
         k1.right = rotateWithLeftChild( k1.right );
         return rotateWithRightChild( k1 );
@@ -198,7 +200,7 @@ class BSTree<T extends Comparable<T>>{
     public boolean search(T val){
         return search(root, val);
     }
-    @SuppressWarnings("unchecked")
+    
     private boolean search(TreeNode<T> r, T val){
         boolean found = false;
         while ((r != null) && !found){
