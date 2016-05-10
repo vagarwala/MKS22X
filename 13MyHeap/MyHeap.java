@@ -24,7 +24,7 @@ public class MyHeap<T extends Comparable<T>> {
     public MyHeap(T[] data){
         size = 0;
         isMax = true;
-        array = (T[])new Comparable[DEFAULT_CAPACITY];
+        array = (T[])new Comparable[data.length*2];
         heapify(data);
     }
 
