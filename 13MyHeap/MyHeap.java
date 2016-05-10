@@ -1,68 +1,66 @@
 import java.util.Arrays;
-
-public class MyHeap<T extends Comparable<T>>{
+@SuppressWarnings("unchecked")
+public class MyHeap<T extends Comparable<T>> {
     private static final int DEFAULT_CAPACITY = 10;
     public T[] array;
-    public int size;
+    public int size = 0;
     public boolean isMax;
     
-    //Constructor
-    @SuppressWarnings("unchecked")
-	public MyHeap(){
-        this(true);
-    }
-    public MyHeap(T[] array){
-        this(true);
-        this.array = array;
-        heapify();
+    /**
+     * Constructs a new MyHeap.
+     */
+    public MyHeap(){
+        array = (T[])new Comparable[DEFAULT_CAPACITY];
+        size = 0;
+        isMax = true;
     }
 
     public MyHeap(boolean max){
-        array = (T[])new Comparable[10];
-        array[0]=null;
-        size=0;
-        isMax=max;
+        array = (T[])new Comparable[DEFAULT_CAPACITY];
+        size = 0;
+        isMax = max;
     }
 
-    private boolean compare(T t1, T t2){
-        if(isMax){
-            return t1.compareTo(t2)>=0;
-        }else{
-            return t1.compareTo(t2)<=0;
-        }
+    public MyHeap(T[] data){
+        size = 0;
+        isMax = true;
+        array = (T[])new Comparable[DEFAULT_CAPACITY];
+        heapify(data);
     }
 
-    //make existing array into a heap array
-    private void heapify(){
-        size=array.length;
-        array = this.resize();
-        array[size]=array[0];
-        array[0]=null;
-        for(int i = size/2;i>0;i--){
-            bubbleDown(i);
+    private void heapify(T[] data){
+        for (T i : data){
+            add(i);
         }
     }
     
+    private boolean compare(int n) {
+        if (isMax) {
+            return n < 0;
+        }
+        return n > 0;
+    }
     
-    //add a value
     public void add(T value) {
         // grow array if needed
         if (size >= array.length - 1) {
-            array = this.resize();
+            doubleSize();
         }        
+        
         // place element into heap at bottom
         size++;
         int index = size;
         array[index] = value;
-        //push it up to where it should be
-        bubbleUp(size);
+        
+        pushUp();
     }
+    
     
     public boolean isEmpty() {
         return size == 0;
     }
 
-    //max element in the heap (root)
+    
     public T peek() {
         if (this.isEmpty()) {
             throw new IllegalStateException();
@@ -71,41 +69,61 @@ public class MyHeap<T extends Comparable<T>>{
         return array[1];
     }
 
-    
-    //removes (and returns) root
-    public T remove(){
+    public T delete() {
+        // what do want return?
         T result = peek();
-        array[1]=array[size];
-        bubbleDown(1);
+        
+        // get rid of the last leaf/decrement
+        array[1] = array[size];
+        array[size] = null;
         size--;
+        
+        pushDown();
+        
         return result;
-    }    
+    }
+    
     
     public String toString() {
         return Arrays.toString(array);
     }
 
     
-    //put the root in its proper place
-    private void bubbleDown(int k){
-        if((k<size/2)&& !(compare(array[k],array[leftIndex(k)])&&(compare(array[k],array[rightIndex(k)])))){
-            if(compare(array[leftIndex(k)],array[rightIndex(k)])){
-                swap(leftIndex(k),k);
-                bubbleDown(leftIndex(k));
-            }else{
-                swap(rightIndex(k),k);
-                bubbleDown(rightIndex(k));
+    public void pushDown() {
+        int index = 1;
+        
+        // push down
+        while (hasLeftChild(index)) {
+            // which of my children is smaller?
+            int smallerChild = leftIndex(index);
+            
+            // push with the smaller child, if I have a smaller child
+            if (hasRightChild(index) && compare(array[leftIndex(index)].compareTo(array[rightIndex(index)]))) {
+                smallerChild = rightIndex(index);
+            } 
+            
+            if (compare(array[index].compareTo(array[smallerChild]))) {
+                swap(index, smallerChild);
+            } else {
+                // otherwise, get outta here!
+                break;
             }
-        }
+            
+            // make sure to update loop counter/index of where last el is put
+            index = smallerChild;
+        }        
     }
     
     
-    //put the newly inserted element in its place
-    private void bubbleUp(int k){
-        if((hasParent(k))&&(compare(array[k],array[parentIndex(k)]))){
-            swap(parentIndex(k),k);
-            bubbleUp(parentIndex(k));
-        }
+    public void pushUp() {
+        int index = this.size;
+        
+        while (hasParent(index)
+                && (compare(parent(index).compareTo(array[index])))) {
+            // parent/child are out of order; swap them
+            swap(index, parentIndex(index));
+            index = parentIndex(index);
+        }        
     }
     
     
@@ -144,8 +162,8 @@ public class MyHeap<T extends Comparable<T>>{
     }
     
     
-    public T[] resize() {
-        return Arrays.copyOf(array, array.length * 2);
+    public void doubleSize() {
+        array = Arrays.copyOf(array, array.length * 2);
     }
     
     
@@ -153,5 +171,5 @@ public class MyHeap<T extends Comparable<T>>{
         T tmp = array[index1];
         array[index1] = array[index2];
         array[index2] = tmp;        
-    }   
+    }
 }

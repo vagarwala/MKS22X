@@ -1,11 +1,11 @@
 import java.util.Scanner;
 /* Class HeapTest */
-public class MyHeapTest{
+public class BinaryHeapTest{
     public static void main(String[] args){            
         Scanner scan = new Scanner(System.in);
         /* Creating object of Heap */
         Integer[] l = {1, 2, 3};
-        MyHeap<Integer> myHeap = new MyHeap<Integer>(l); 
+        BinaryHeap<Integer> myHeap = new BinaryHeap<Integer>(l); 
         System.out.println("Heap Test\n");
         System.out.println("Heap:");
         System.out.println(myHeap.toString());
